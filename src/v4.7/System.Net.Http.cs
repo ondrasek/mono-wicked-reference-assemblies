@@ -276,9 +276,7 @@ namespace System.Net.Http
         public System.Collections.Generic.IDictionary<string, object> Properties { get { throw null; } }
         public System.Net.IWebProxy Proxy { get { throw null; } set { } }
         public System.TimeSpan ResponseDrainTimeout { get { throw null; } set { } }
-#if MARTIN_FIXME
         public System.Net.Security.SslClientAuthenticationOptions SslOptions { get { throw null; } set { } }
-#endif
         public bool UseCookies { get { throw null; } set { } }
         public bool UseProxy { get { throw null; } set { } }
         protected override void Dispose(bool disposing) { }
