@@ -1,3 +1,8 @@
+using System.Collections.ObjectModel;
+using System.Collections.Generic;
+using System.ServiceModel.Description;
+using System.ServiceModel.Channels;
+
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
@@ -1951,7 +1956,6 @@ namespace System.ServiceModel
         public System.TimeSpan OpenTimeout { get { throw null; } set { } }
         public event System.EventHandler<System.ServiceModel.UnknownMessageReceivedEventArgs> UnknownMessageReceived { add { } remove { } }
         protected void AddBaseAddress(System.Uri baseAddress) { }
-        public virtual System.Collections.ObjectModel.ReadOnlyCollection<System.ServiceModel.Description.ServiceEndpoint> AddDefaultEndpoints() { throw null; }
         public virtual void AddServiceEndpoint(System.ServiceModel.Description.ServiceEndpoint endpoint) { }
         public System.ServiceModel.Description.ServiceEndpoint AddServiceEndpoint(string implementedContract, System.ServiceModel.Channels.Binding binding, string address) { throw null; }
         public System.ServiceModel.Description.ServiceEndpoint AddServiceEndpoint(string implementedContract, System.ServiceModel.Channels.Binding binding, string address, System.Uri listenUri) { throw null; }
@@ -1976,7 +1980,22 @@ namespace System.ServiceModel
         protected void ReleasePerformanceCounters() { }
         public void SetEndpointAddress(System.ServiceModel.Description.ServiceEndpoint endpoint, string relativeAddress) { }
         void System.IDisposable.Dispose() { }
+
+        /*
+         * Dummy AddServiceEndpoints() based on
+         * https://github.com/mono/mono/blob/master/mcs/class/referencesource/System.ServiceModel/System/ServiceModel/ServiceHost.cs
+         */
+        public virtual ReadOnlyCollection<ServiceEndpoint> AddDefaultEndpoints()
+        {
+            return new ReadOnlyCollection<ServiceEndpoint>(new List<ServiceEndpoint>());
+        }
+
+        internal virtual void AddDefaultEndpoints(Binding defaultBinding, List<ServiceEndpoint> defaultEndpoints)
+        {
+            // Does nothing.
+        }
     }
+
     [System.AttributeUsageAttribute((System.AttributeTargets)(1092), AllowMultiple=true, Inherited=true)]
     public sealed partial class ServiceKnownTypeAttribute : System.Attribute
     {
