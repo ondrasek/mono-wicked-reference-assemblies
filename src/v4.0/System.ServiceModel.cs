@@ -1,3 +1,8 @@
+using System.Collections.ObjectModel;
+using System.Collections.Generic;
+using System.ServiceModel.Description;
+using System.ServiceModel.Channels;
+
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
@@ -2305,6 +2310,7 @@ namespace System.ServiceModel
         protected void InitializeDescription(object serviceInstance, System.ServiceModel.UriSchemeKeyedCollection baseAddresses) { }
         protected void InitializeDescription(System.Type serviceType, System.ServiceModel.UriSchemeKeyedCollection baseAddresses) { }
     }
+
     public abstract partial class ServiceHostBase : System.ServiceModel.Channels.CommunicationObject, System.IDisposable, System.ServiceModel.IExtensibleObject<System.ServiceModel.ServiceHostBase>
     {
         protected ServiceHostBase() { }
@@ -2343,7 +2349,22 @@ namespace System.ServiceModel
         [System.MonoTODOAttribute]
         protected void ReleasePerformanceCounters() { }
         void System.IDisposable.Dispose() { }
+
+        /*
+         * Dummy AddServiceEndpoints() based on
+         * https://github.com/mono/mono/blob/master/mcs/class/referencesource/System.ServiceModel/System/ServiceModel/ServiceHost.cs
+         */
+        public virtual ReadOnlyCollection<ServiceEndpoint> AddDefaultEndpoints()
+        {
+        return new ReadOnlyCollection<ServiceEndpoint>(new List<ServiceEndpoint>());
+        }
+
+        internal virtual void AddDefaultEndpoints(Binding defaultBinding, List<ServiceEndpoint> defaultEndpoints)
+        {
+        // Does nothing.
+        }
     }
+
     [System.AttributeUsageAttribute((System.AttributeTargets)(1092), AllowMultiple=true, Inherited=true)]
     public sealed partial class ServiceKnownTypeAttribute : System.Attribute
     {

@@ -1,4 +1,9 @@
-all:
+all: monofx
+	$(MAKE) -C build/monotouch
+	$(MAKE) -C build/monodroid
+	$(MAKE) -C build/monowasm	
+
+monofx:
 	$(MAKE) -C v2.0
 	$(MAKE) -C v3.5
 	$(MAKE) -C v4.0
@@ -13,9 +18,6 @@ all:
 	$(MAKE) -C v4.7.2
 	$(MAKE) -C v4.8
 	$(MAKE) -C mono
-	$(MAKE) -C build/monotouch
-	$(MAKE) -C build/monodroid
-	$(MAKE) -C build/monowasm	
 
 clean:
 	$(MAKE) -C v2.0 clean
